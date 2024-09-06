@@ -1,4 +1,4 @@
-import axiosInstance from "./axios-instance";
+import axios from "./axios-instance";
 import { store } from "../store";
 import { signOut } from "../slice/authSlice";
 
@@ -13,10 +13,11 @@ interface User {
 
 export const login = async (email: string, password: string): Promise<any> => {
   try {
-    const response = await axiosInstance.post(`/login/`, {
+    const response = await axios.post(`/login/`, {
       email,
       password,
     });
+
     return response.data;
   } catch (err: any) {
     console.log(err, "xxx");
@@ -27,7 +28,7 @@ export const login = async (email: string, password: string): Promise<any> => {
 
 export const register = async (user: User): Promise<any> => {
   try {
-    const response = await axiosInstance.post(`/users/`, user);
+    const response = await axios.post(`/users/`, user);
     return response.data;
   } catch (err: any) {
     console.log(err, "Salom");
@@ -49,7 +50,7 @@ export const logOut = async (
   };
 
   try {
-    const response = await axiosInstance.post(`/logout/`, data, {
+    const response = await axios.post(`/logout/`, data, {
       headers,
     });
     return response.data;

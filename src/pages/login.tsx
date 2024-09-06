@@ -25,7 +25,8 @@ export function Login() {
       .then((res) => {
         setIsLoading(false);
         dispatch(signIn(res));
-        toast.success("Login successful!");
+        // toast.success("Login successful!");
+        navigate("/");
       })
       .catch((err) => {
         setIsLoading(false);

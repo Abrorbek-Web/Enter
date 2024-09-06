@@ -1,5 +1,4 @@
-import axiosInstance from "./axios-instance";
-import { saveAccessToken, saveRefreshToken } from "./tokenService";
+import axios from "./axios-instance";
 
 interface Article {
   title: string;
@@ -20,42 +19,42 @@ export interface Report {
 }
 const ArticleService = {
   async getProject(): Promise<Article[]> {
-    const { data } = await axiosInstance.get<Article[]>("/project");
+    const { data } = await axios.get<Article[]>("/project");
     console.log(data);
 
     return data;
   },
 
   async getReport(): Promise<Report> {
-    saveAccessToken();
-    saveRefreshToken();
-    const { data } = await axiosInstance.get<Report>(`/report/`);
+    const { data } = await axios.get<Report>(`/report/`);
+
     return data;
   },
   async getReportDetail(id: number): Promise<Report> {
-    saveAccessToken();
-    saveRefreshToken();
-    const { data } = await axiosInstance.get<Report>(`/report/${id}`);
+    const { data } = await axios.get<Report>(`/report/${id}`);
+    console.log(data);
+
     return data;
   },
 
   async getProcurementProgress(slug: string): Promise<Article> {
-    const { data } = await axiosInstance.get<Article>(`/procurement_progress`);
+    const { data } = await axios.get<Article>(`/procurement_progress`);
     return data;
   },
 
   async getProcurementDetail(slug: string): Promise<Article> {
-    const { data } = await axiosInstance.get<Article>(`/procurement_detail`);
+    const { data } = await axios.get<Article>(`/procurement_detail`);
     return data;
   },
   async getBulkProgress(slug: string): Promise<Article> {
-    const { data } = await axiosInstance.get<Article>(`/bulk_progress`);
+    const { data } = await axios.get<Article>(`/bulk_progress`);
     return data;
   },
   async getBulkDetail(slug: string): Promise<Article> {
-    const { data } = await axiosInstance.get<Article>(`/bulk_detail`);
+    const { data } = await axios.get<Article>(`/bulk_detail`);
     return data;
   },
 };
+ArticleService.getReport();
 
 export default ArticleService;

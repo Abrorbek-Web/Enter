@@ -11,7 +11,7 @@ import {
 const accessToken = getAccessToken();
 const refreshToken = getRefreshToken();
 const ADMIN_KEY = "isAdmin";
-const isAdmin = localStorage.getItem(ADMIN_KEY) === "true";
+const isAdmin = localStorage.getItem(ADMIN_KEY) === "false";
 
 interface AuthState {
   accessToken: string | null;
@@ -38,15 +38,13 @@ const authSlice = createSlice({
       }>
     ) => {
       const { refresh, access, is_admin } = action.payload;
-      // saveAccessToken(access);
-      // saveRefreshToken(refresh);
-      // saveAccessToken();
-      // saveRefreshToken();
-      // if (is_admin) {
-      //   localStorage.setItem(ADMIN_KEY, "true");
-      // } else {
-      //   localStorage.removeItem(ADMIN_KEY);
-      // }
+      saveAccessToken(access);
+      saveRefreshToken(refresh);
+      if (is_admin) {
+        localStorage.setItem(ADMIN_KEY, "false");
+      } else {
+        localStorage.removeItem(ADMIN_KEY);
+      }
 
       return { accessToken: access, refreshToken: refresh, isAdmin: is_admin };
     },

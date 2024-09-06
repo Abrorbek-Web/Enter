@@ -4,12 +4,10 @@ import { signOut } from "../slice/authSlice";
 import { store } from "../store";
 
 // Create an instance of axios with a base URL
-const axiosInstance = axios.create({
-  baseURL: process.env.VITE_API_KEY,
-});
+axios.defaults.baseURL = "https://6de2-213-230-93-108.ngrok-free.app/api/v1";
 
 // Intercept requests to include the Authorization header if a token is available
-axiosInstance.interceptors.request.use(
+axios.interceptors.request.use(
   (config: AxiosRequestConfig): any => {
     const token = getAccessToken();
 
@@ -28,7 +26,7 @@ axiosInstance.interceptors.request.use(
 );
 
 // Intercept responses to handle specific status codes, like 403 (Forbidden)
-axiosInstance.interceptors.response.use(
+axios.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
     return response;
   },
@@ -40,4 +38,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default axios;

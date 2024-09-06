@@ -8,37 +8,40 @@ import {
   FaQuoteRight,
   FaCog,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 type MenuItem = {
   name: string;
-  icon: React.ReactNode;
+  icon: React.ReactNode | null;
+  link?: string;
   subMenu?: MenuItem[];
 };
 
 const menuItems: MenuItem[] = [
-  { name: "Dashboard", icon: <FaTachometerAlt /> },
+  { name: "Dashboard", icon: <FaTachometerAlt />, link: "/" },
   {
     name: "Reports",
     icon: <FaClipboardList />,
     subMenu: [
-      { name: "Engineering", icon: null },
-      { name: "Procurement", icon: null },
-      { name: "Bulk", icon: null },
-      { name: "Construction ", icon: null },
-      { name: "Subcontracts", icon: null },
-      { name: "Manpower", icon: null },
-      { name: "Machinery", icon: null },
-      { name: "Budget", icon: null },
+      { name: "Engineering", icon: null, link: "/3" },
+      { name: "Procurement", icon: null, link: "/4" },
+      { name: "Bulk", icon: null, link: "/5" },
+      { name: "Construction", icon: null, link: "/6" },
+      { name: "Subcontracts", icon: null, link: "/7" },
+      { name: "Manpower", icon: null, link: "/8" },
+      { name: "Machinery", icon: null, link: "/9" },
+      { name: "Budget", icon: null, link: "/10" },
     ],
   },
-  //   { name: "Companies", icon: <FaBuilding /> },
-  //   { name: "Contacts", icon: <FaUser /> },
-  //   { name: "Quotes", icon: <FaQuoteRight /> },
-  //   {
-  //     name: "Administration",
-  //     icon: <FaCog />,
-  //     subMenu: [],
-  //   },
+  // Uncomment and add more items as needed
+  // { name: "Companies", icon: <FaBuilding /> },
+  // { name: "Contacts", icon: <FaUser /> },
+  // { name: "Quotes", icon: <FaQuoteRight /> },
+  // {
+  //   name: "Administration",
+  //   icon: <FaCog />,
+  //   subMenu: [],
+  // },
 ];
 
 export function Sidebar() {
@@ -68,12 +71,14 @@ export function Sidebar() {
             {item.subMenu && activeMenu === item.name && (
               <ul className="pl-8 mt-2">
                 {item.subMenu.map((subItem, subIndex) => (
-                  <li
-                    key={subIndex}
-                    className="mb-2 p-2 rounded-lg hover:bg-gray-200 text-gray-600"
-                  >
-                    {subItem.name}
-                  </li>
+                  <Link key={subIndex} to={subItem.link ?? "#"}>
+                    <li
+                      key={subIndex}
+                      className="mb-2 p-2 rounded-lg hover:bg-gray-200 text-gray-600"
+                    >
+                      {subItem.name}
+                    </li>
+                  </Link>
                 ))}
               </ul>
             )}

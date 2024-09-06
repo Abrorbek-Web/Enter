@@ -7,7 +7,7 @@ import { Report } from "../services/articles";
 import { QuoteStatusTag } from "./listStatusTag";
 import { DeleteButton, EditButton, List, ShowButton } from "@refinedev/antd";
 
-export const QuotesListPage: FC<PropsWithChildren> = ({ children }) => {
+export const ListPage: FC<PropsWithChildren> = ({ children }) => {
   const [detail, setDetail] = useState<Report | null>(null);
   const { id } = useParams();
 

@@ -1,8 +1,8 @@
 import { ToastContainer } from "react-toastify";
 import { Login, Register } from "./pages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { QuotesListPage } from "./components/list";
-import { Home, Layout } from "./components";
+import { ListPage } from "./components/list";
+import { Home } from "./components";
 // import ProtectedRoutes from "./routes/ProtectedRoutes";
 function App() {
   return (
@@ -22,9 +22,10 @@ function App() {
 
           {/* <Route path="/" element={<ProtectedRoutes />}> */}
           <Route path="/" element={<Home />} />
+          <Route path="/:id" element={<ListPage />} />
           {/* <Route path="/profile" element={<Profile />} /> */}
           {/* </Route> */}
-          <Route path="/ref" element={<QuotesListPage />} />
+          <Route path="/ref" element={<ListPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           {/* <Route path="/waiting" element={<Waiting />} /> */}
