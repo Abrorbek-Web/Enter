@@ -6,7 +6,7 @@ export function Header() {
     <header className="flex items-center justify-between bg-white shadow-sm py-2 px-4">
       <div className="flex items-center">
         <AiOutlineThunderbolt className="text-blue-500 text-2xl" />
-        <span className="ml-2 font-bold text-lg">Globex Corporation</span>
+        <span className="ml-2 font-bold text-lg">Site Sync</span>
       </div>
 
       <div className="flex items-center">
@@ -22,7 +22,7 @@ export function Header() {
         <AiOutlineBell className="ml-6 text-xl text-gray-500 cursor-pointer" />
         <div className="ml-6 w-8 h-8 rounded-full overflow-hidden">
           <img
-            src="https://via.placeholder.com/150"
+            src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
             alt="User Avatar"
             className="w-full h-full object-cover"
           />
