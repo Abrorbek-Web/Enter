@@ -3,3 +3,7 @@ export * from "./sidebar";
 export * from "./layout";
 export * from "./home";
 export * from "./list";
+export * from "./tabs";
+export * from "./reportTable";
+export * from "./reportPage";
+export * from "./modalProps";

@@ -6,12 +6,17 @@ import ArticleService from "../services/articles";
 import { Report } from "../services/articles";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { GrStatusGood } from "react-icons/gr";
+import { VscCommentDraft } from "react-icons/vsc";
+import { PiTelegramLogoLight } from "react-icons/pi";
 
 const { confirm } = Modal;
 
 export const ListPage: FC<PropsWithChildren> = ({ children }) => {
   const [detail, setDetail] = useState<Report | null>(null);
   const { id } = useParams();
+  console.log(id);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +40,7 @@ export const ListPage: FC<PropsWithChildren> = ({ children }) => {
     );
   }
   console.log(detail);
+  console.log(new Date());
 
   const dataSource = [
     {
@@ -62,44 +68,88 @@ export const ListPage: FC<PropsWithChildren> = ({ children }) => {
   //     },
   //   });
   // };
+  const getStatusColor = () => {
+    switch (detail.status) {
+      case "active":
+        return "bg-green-300 text-green-500";
+      case "draft":
+        return "bg-blue-300 text-blue-500";
+      case "sent":
+        return "bg-blue-300 text-blue-600";
+      default:
+        break;
+    }
+  };
+  const getStatusIcon = () => {
+    switch (detail.status) {
+      case "active":
+        return <GrStatusGood className="text-green-500" />;
+      case "draft":
+        return <VscCommentDraft className="text-blue-500" />;
+      case "sent":
+        return <PiTelegramLogoLight className="text-blue-600" />;
+      default:
+        break;
+    }
+  };
+  const getTypeHeader = () => {
+    switch (detail._type) {
+      case "engineering":
+        return "Engineering Progress Report & 6-Month Look-Ahead Forecast";
+      case "procurement":
+        return "Procurement Progress Report & Schedule";
+      case "bulk":
+        return "Bulk Material Procurement Progress Report & Look-Ahead Forecast";
+      case "construction":
+        return "Construction Progress Report & 6-Month Look-Ahead Forecast";
+      case "subcontracts":
+        return "Subcontracts Status Report";
+      case "manpower":
+        return " Manpower Status Report & 12-Month Look-Ahead Forecast";
+      case "machinery":
+        return "Machinery Status Report & 12-Month Look-Ahead Forecast";
+      case "budget":
+        return "Cost & Cash Outflow Forecast";
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="page-container">
-      <h3>{detail._type}</h3>
-      <Table dataSource={dataSource} rowKey="key" style={{ padding: "0.5rem" }}>
+      <h1 className="text-[#040406] text-[1.7rem]">{getTypeHeader()}</h1>
+      <Table dataSource={dataSource} rowKey="key" style={{ padding: "1rem" }}>
         <Table.Column
           title="Report №"
           dataIndex="reportNumber"
           key="reportNumber"
-          render={(text) => <div style={{ padding: "1rem" }}>{text}</div>}
+          render={(text) => <div>{text}</div>}
         />
         <Table.Column
           title="Created"
           dataIndex="created"
           key="created"
-          render={(text) => <div style={{ padding: "1rem" }}>{text}</div>}
+          render={(text) => <div>{text}</div>}
         />
         <Table.Column
           title="Responsible"
           dataIndex="responsible"
           key="responsible"
-          render={(text) => <div style={{ padding: "1rem" }}>{text}</div>}
+          render={(text) => <div>{text}</div>}
         />
         <Table.Column
           title="Status"
           dataIndex="status"
           key="status"
           render={(status) => (
-            <div style={{ padding: "1rem" }}>
-              <span
-                className={`tag ${
-                  status === "approved"
-                    ? "bg-green-500 text-white"
-                    : "bg-gray-300 text-black"
-                }`}
+            <div className="flex items-center ">
+              {/* <span>{getStatusIcon()}</span> */}
+              <div
+                className={`tag flex ${getStatusColor()} px-[1.2rem] py-1 rounded-md items-center`}
               >
-                {status}
-              </span>
+                <div>{getStatusIcon()}</div>
+                <div className="ml-1">{status}</div>
+              </div>
             </div>
           )}
         />
@@ -110,18 +160,29 @@ export const ListPage: FC<PropsWithChildren> = ({ children }) => {
             <Space style={{ padding: "0.5rem" }}>
               <Button
                 type="link"
-                icon={<FaEye />}
-                // onClick={() => navigate(`/show/${record.key}`)}
+                icon={
+                  <FaEye
+                    color="#555"
+                    className="text-[1rem] outline outline-offset-[0.5rem] outline-1 outline-slate-300"
+                  />
+                }
+                onClick={() => navigate(`/detail/1`)}
               />
               <Button
                 type="link"
-                icon={<FaEdit />}
+                icon={
+                  <FaEdit
+                    color="#555"
+                    className="text-[1rem] outline outline-offset-[0.5rem] outline-1 outline-slate-300"
+                  />
+                }
                 // onClick={() => navigate(`/edit/${record.key}`)}
-                className=""
               />
               <Button
                 type="link"
-                icon={<FaTrash />}
+                icon={
+                  <FaTrash className="text-[1rem] outline outline-offset-[0.5rem] outline-1 outline-red-300" />
+                }
                 // onClick={() => handleDelete(record.key)}
                 danger
               />

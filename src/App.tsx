@@ -2,7 +2,7 @@ import { ToastContainer } from "react-toastify";
 import { Login, Register } from "./pages";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ListPage } from "./components/list";
-import { Home, Layout } from "./components";
+import { Home, Layout, ReportPage } from "./components";
 
 function App() {
   return (
@@ -21,7 +21,8 @@ function App() {
               <Layout>
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/:id" element={<ListPage />} />
+                  <Route path="/list/:id" element={<ListPage />} />
+                  <Route path="/detail/:id" element={<ReportPage />} />
                   {/* Add more routes here */}
                 </Routes>
               </Layout>

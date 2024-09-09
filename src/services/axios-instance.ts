@@ -4,7 +4,7 @@ import { signOut } from "../slice/authSlice";
 import { store } from "../store";
 
 // Create an instance of axios with a base URL
-axios.defaults.baseURL = "https://6de2-213-230-93-108.ngrok-free.app/api/v1";
+axios.defaults.baseURL = "http://10.1.130.242:8000/api/v1/";
 
 // Intercept requests to include the Authorization header if a token is available
 axios.interceptors.request.use(
