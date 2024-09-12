@@ -17,6 +17,26 @@ export interface Report {
   updater: number;
   responsible: number;
 }
+
+export interface Detail {
+  id: number;
+  created: string;
+  updated: string;
+  status: string;
+  area: string;
+  discipline: string;
+  material_name: string;
+  weight_factor: string;
+  total_boq: string;
+  unit: string;
+  delivery_site: string;
+  creator: number;
+  updater: number;
+  project: number;
+  responsible: number;
+  report: number;
+}
+
 const ArticleService = {
   async getProject(): Promise<Article[]> {
     const { data } = await axios.get<Article[]>("/project");
@@ -25,15 +45,12 @@ const ArticleService = {
     return data;
   },
 
-  async getReport(): Promise<Report> {
-    const { data } = await axios.get<Report>(`/report/`);
-
+  async getReport(id: number): Promise<Report> {
+    const { data } = await axios.get<Report>(`/report/${id}`);
     return data;
   },
-  async getReportDetail(id: number): Promise<Report> {
-    const { data } = await axios.get<Report>(`/report/${id}`);
-    console.log(data);
-
+  async getReportDetail(id: number): Promise<Detail> {
+    const { data } = await axios.get<Detail>(`/bulk_progress/${id}`);
     return data;
   },
 
@@ -55,6 +72,5 @@ const ArticleService = {
     return data;
   },
 };
-ArticleService.getReport();
 
 export default ArticleService;

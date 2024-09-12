@@ -1,14 +1,11 @@
-const ReportTable = () => {
-  const data = [
-    {
-      id: 1,
-      description: "Basic Design",
-      weight: "1.00%",
-      baseline: "12.00%",
-      actual: "6.00%",
-    },
-  ];
+import React from "react";
+import { Detail } from "../services/articles"; // Make sure 'Detail' is correctly imported
 
+type ReportTableProps = {
+  detail: Detail;
+};
+
+const ReportTable: React.FC<ReportTableProps> = ({ detail }) => {
   return (
     <table className="w-full mt-4 text-left border-collapse">
       <thead>
@@ -21,15 +18,13 @@ const ReportTable = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => (
-          <tr key={item.id} className="hover:bg-gray-50">
-            <td className="border p-2">{item.id}</td>
-            <td className="border p-2">{item.description}</td>
-            <td className="border p-2">{item.weight}</td>
-            <td className="border p-2">{item.baseline}</td>
-            <td className="border p-2">{item.actual}</td>
-          </tr>
-        ))}
+        <tr key={detail.id} className="hover:bg-gray-50">
+          <td className="border p-2">{detail.id}</td>
+          <td className="border p-2">{detail.discipline}</td>
+          <td className="border p-2">{detail.weight_factor} kg</td>
+          <td className="border p-2">{detail.area}</td>
+          <td className="border p-2">{detail.delivery_site}</td>
+        </tr>
       </tbody>
     </table>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState, type FC, type PropsWithChildren } from "react";
-import { Table, Space, Spin, Button, Modal, message } from "antd";
+import { Table, Space, Button, Modal, message } from "antd";
 import dayjs from "dayjs";
 import { useParams, useNavigate } from "react-router-dom";
 import ArticleService from "../services/articles";
@@ -9,20 +9,20 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { GrStatusGood } from "react-icons/gr";
 import { VscCommentDraft } from "react-icons/vsc";
 import { PiTelegramLogoLight } from "react-icons/pi";
+import { EmptyPage } from "./";
 
 const { confirm } = Modal;
 
 export const ListPage: FC<PropsWithChildren> = ({ children }) => {
   const [detail, setDetail] = useState<Report | null>(null);
   const { id } = useParams();
-  console.log(id);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await ArticleService.getReportDetail(Number(id));
+        const response = await ArticleService.getReport(Number(id));
         setDetail(response);
       } catch (error) {
         console.error("Failed to fetch report detail:", error);
@@ -31,45 +31,20 @@ export const ListPage: FC<PropsWithChildren> = ({ children }) => {
     getData();
   }, [id]);
 
-  if (!detail) {
-    return (
-      <Spin
-        spinning={true}
-        className="w-full h-screen flex justify-center items-center"
-      />
-    );
-  }
-  console.log(detail);
-  console.log(new Date());
+  const dataSource = detail
+    ? [
+        {
+          key: detail.id,
+          reportNumber: 1, // Assuming report number is static or generated
+          created: dayjs(detail.created).format("DD.MM.YYYY"),
+          responsible: detail.responsible,
+          status: detail.status,
+        },
+      ]
+    : [];
 
-  const dataSource = [
-    {
-      key: detail.id,
-      reportNumber: 1, // Assuming report number is static or generated
-      created: dayjs(detail.created).format("DD.MM.YYYY"),
-      responsible: detail.responsible,
-      status: detail.status,
-    },
-  ];
-
-  // const handleDelete = (recordId: number) => {
-  //   confirm({
-  //     title: "Are you sure you want to delete this item?",
-  //     icon: <ExclamationCircleOutlined />,
-  //     onOk: async () => {
-  //       try {
-  //         // Assuming you have a delete service function
-  //         await ArticleService.deleteReport(recordId);
-  //         message.success("Record deleted successfully");
-  //         navigate("/"); // Navigate to a different page or refresh the list
-  //       } catch (error) {
-  //         message.error("Failed to delete the record");
-  //       }
-  //     },
-  //   });
-  // };
   const getStatusColor = () => {
-    switch (detail.status) {
+    switch (detail?.status) {
       case "active":
         return "bg-green-300 text-green-500";
       case "draft":
@@ -80,8 +55,9 @@ export const ListPage: FC<PropsWithChildren> = ({ children }) => {
         break;
     }
   };
+
   const getStatusIcon = () => {
-    switch (detail.status) {
+    switch (detail?.status) {
       case "active":
         return <GrStatusGood className="text-green-500" />;
       case "draft":
@@ -92,8 +68,9 @@ export const ListPage: FC<PropsWithChildren> = ({ children }) => {
         break;
     }
   };
+
   const getTypeHeader = () => {
-    switch (detail._type) {
+    switch (detail?._type) {
       case "engineering":
         return "Engineering Progress Report & 6-Month Look-Ahead Forecast";
       case "procurement":
@@ -118,7 +95,14 @@ export const ListPage: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className="page-container">
       <h1 className="text-[#040406] text-[1.7rem]">{getTypeHeader()}</h1>
-      <Table dataSource={dataSource} rowKey="key" style={{ padding: "1rem" }}>
+      <Table
+        dataSource={dataSource}
+        rowKey="key"
+        style={{ padding: "1rem" }}
+        locale={{
+          emptyText: <EmptyPage />,
+        }}
+      >
         <Table.Column
           title="Report №"
           dataIndex="reportNumber"
@@ -142,8 +126,7 @@ export const ListPage: FC<PropsWithChildren> = ({ children }) => {
           dataIndex="status"
           key="status"
           render={(status) => (
-            <div className="flex items-center ">
-              {/* <span>{getStatusIcon()}</span> */}
+            <div className="flex items-center">
               <div
                 className={`tag flex ${getStatusColor()} px-[1.2rem] py-1 rounded-md items-center`}
               >

@@ -7,3 +7,6 @@ export * from "./tabs";
 export * from "./reportTable";
 export * from "./reportPage";
 export * from "./modalProps";
+export * from "./addReport";
+export * from "./emptyPage";
+export * from "./reportInfo";

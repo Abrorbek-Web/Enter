@@ -1,9 +1,28 @@
-import React, { useState } from "react";
-import { Tab, ReportTable, Modal } from "./";
+import React, { useEffect, useState } from "react";
+import { Tab, ReportTable, Modal, AddReport, ReportInfo } from "./";
+import ArticleService, { Detail } from "../services/articles";
+import { useParams } from "react-router-dom";
+import { Empty } from "antd";
+import dayjs from "dayjs";
 
 const ReportPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHalfScreenOpen, setIsHalfScreenOpen] = useState(false);
+  const [detail, setDetail] = useState<Detail | null>(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const getDetail = async () => {
+      try {
+        const data = await ArticleService.getReportDetail(Number(id));
+        setDetail(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getDetail();
+  }, []);
+  console.log(detail);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -20,37 +39,38 @@ const ReportPage: React.FC = () => {
   return (
     <section className="flex h-screen flex-col justify-between relative">
       <div className="container mx-auto p-4 flex-grow">
-        <nav className="text-sm text-gray-600">
+        <nav className="text-sm text-gray-600 flex justify-between">
           <ul className="flex space-x-2">
             <li>Home</li>
             <li>/</li>
             <li>Engineering Report</li>
             <li>/</li>
-            <li className="font-semibold">Report №1 06.06.2024</li>
+            <li className="font-semibold">
+              Report №1 {dayjs(detail?.created).format("DD.MM.YYYY")}
+            </li>
           </ul>
+          <div className="inline-block mr-10">
+            <ReportInfo />
+          </div>
         </nav>
         <div className="flex items-center justify-between mt-4 mb-2">
-          <h1 className="text-2xl font-bold">Report №1 06.06.2024</h1>
+          <h1 className="text-2xl font-bold">
+            Report №1 {dayjs(detail?.created).format("DD.MM.YYYY")}
+          </h1>
         </div>
-        <button
-          className="bg-blue-500 w-full text-white py-2 px-4 rounded-md hover:bg-blue-600"
-          onClick={openModal}
-        >
-          + Add Report
-        </button>
+        <AddReport />
         <div className="flex mt-2 justify-between items-center">
           <Tab />
         </div>
-        <ReportTable />
+        {detail ? <ReportTable detail={detail} /> : <Empty />}
       </div>
-      <div className="w-full">
-        <button
-          className="inline-block text-white bg-blue-500 p-2 rounded-lg ml-2"
-          onClick={toggleHalfScreen}
-        >
-          Click
-        </button>
-      </div>
+
+      <button
+        className="inline-block absolute right-2 top-3 text-white bg-blue-500 p-2 rounded-lg ml-2"
+        onClick={toggleHalfScreen}
+      >
+        Click
+      </button>
 
       {/* Modal Component */}
       <Modal isOpen={isModalOpen} onClose={closeModal} />
@@ -60,7 +80,7 @@ const ReportPage: React.FC = () => {
         <div className="fixed bottom-0 right-6 w-[80%] h-1/2 bg-gray-700 bg-opacity-75 z-50 border-[1px]">
           <div className="relative h-full">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+              className="absolute top-4 right-2 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
               onClick={toggleHalfScreen}
             >
               Close
