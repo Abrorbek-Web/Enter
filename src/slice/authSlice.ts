@@ -41,9 +41,9 @@ const authSlice = createSlice({
       saveAccessToken(access);
       saveRefreshToken(refresh);
       if (is_admin) {
-        localStorage.setItem(ADMIN_KEY, "false");
+        localStorage.setItem(ADMIN_KEY, "true");
       } else {
-        localStorage.removeItem(ADMIN_KEY);
+        localStorage.setItem(ADMIN_KEY, "false");
       }
 
       return { accessToken: access, refreshToken: refresh, isAdmin: is_admin };

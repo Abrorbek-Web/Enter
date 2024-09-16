@@ -22,3 +22,6 @@ export const getAccessToken = (): string | null => {
 export const getRefreshToken = (): string | null => {
   return localStorage.getItem(KEY_FOR_REFRESH_TOKEN);
 };
+export const saveAdminToken = (value: string): void => {
+  localStorage.setItem(KEY_FOR_ACCESS_TOKEN, value);
+};

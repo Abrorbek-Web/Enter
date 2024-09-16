@@ -35,7 +35,7 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="w-64 bg-gray-50 min-h-screen p-4">
+    <aside className="w-64 bg-[#d6d6d6]  min-h-screen p-4">
       <ul>
         {menuItems.map((item, index) => (
           <Link key={index} to={item.link ?? "#"}>
