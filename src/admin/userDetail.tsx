@@ -55,11 +55,11 @@ export function UserDetails() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className=" min-h-screen">
       {user && (
         <div className="w-full mx-auto mt-3 px-2">
           <div className="flex flex-col md:flex-row gap-3">
-            <div className="min-w-[440px] p-6 bg-white border border-gray-200 rounded-lg shadow ">
+            <div className="min-w-[440px] p-6 bg-gray-100 border border-gray-200 rounded-lg shadow ">
               <div className="text-center flex flex-col items-center justify-center">
                 <img
                   src={avatar}

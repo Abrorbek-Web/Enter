@@ -3,7 +3,7 @@ import { FiSearch } from "react-icons/fi";
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between bg-white shadow-sm py-2 px-4">
+    <header className="flex items-center justify-between bg-[#f2f2f2] shadow-sm py-2 px-4">
       <div className="flex items-center">
         <AiOutlineThunderbolt className="text-blue-500 text-2xl" />
         <span className="ml-2 font-bold text-lg">Site Sync</span>
