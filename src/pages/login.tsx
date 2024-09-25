@@ -12,12 +12,27 @@ export function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isShowingPassword, setIsShowingPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // List of allowed domains
+  const allowedDomains = ["@ent-en.com", "@uzliti-en.com", "@eriell.com"];
 
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Check if the email domain is allowed
+    const emailDomain = email.substring(email.lastIndexOf("@"));
+    if (!allowedDomains.includes(emailDomain)) {
+      toast.error(
+        "Invalid email domain. Corporate email must be @eriell.com, @uzliti-en.com, @ent-en.com .",
+        {
+          position: "top-right",
+        }
+      );
+      return;
+    }
 
     setIsLoading(true);
 
@@ -25,15 +40,14 @@ export function Login() {
       .then((res) => {
         setIsLoading(false);
         dispatch(signIn(res));
-        // toast.success("Login successful!");
+        toast.success("Successfully loginned!");
         navigate("/");
       })
       .catch((err) => {
         setIsLoading(false);
-
         console.log(err.response.data.error);
         if (err.response.data.error === "Awaiting confirmation") {
-          navigate("/waiting");
+          // navigate("/waiting");
         } else {
           dispatch(signOut());
           toast.error("Login failed. Please try again.");

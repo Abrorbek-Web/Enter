@@ -10,3 +10,4 @@ export * from "./modalProps";
 export * from "./addReport";
 export * from "./emptyPage";
 export * from "./reportInfo";
+export * from "./userProfile";

@@ -1,10 +1,9 @@
 import { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import bgImg from "../Assets/bg-img.png";
 import { register } from "../services/authservice";
-import { useNavigate } from "react-router-dom";
 import Select, { SingleValue } from "react-select";
 
 interface PositionOption {
@@ -33,11 +32,25 @@ export function Register() {
   const [position, setPosition] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const navigate = useNavigate();
   const [isShowingPassword, setIsShowingPassword] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const allowedDomains = ["@ent-en.com", "@uzliti-en.com", "@eriell.co"];
 
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    const emailDomain = email.substring(email.lastIndexOf("@"));
+    if (!allowedDomains.includes(emailDomain)) {
+      toast.error(
+        "Invalid email domain. Corporate email must be @eriell.com, @uzliti-en.com, @ent-en.com .",
+        {
+          position: "top-right",
+        }
+      );
+
+      return;
+    }
 
     const user = {
       email,
@@ -55,7 +68,7 @@ export function Register() {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Problem to register.");
+        toast.error("Problem registering. Please try again.");
       });
   };
 

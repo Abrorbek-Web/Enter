@@ -1,7 +1,10 @@
 import { AiOutlineThunderbolt, AiOutlineBell } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="flex items-center justify-between bg-[#f2f2f2] shadow-sm py-2 px-4">
       <div className="flex items-center">
@@ -25,6 +28,7 @@ export function Header() {
             src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
             alt="User Avatar"
             className="w-full h-full object-cover"
+            onClick={() => navigate("/userProfile/1")}
           />
         </div>
       </div>

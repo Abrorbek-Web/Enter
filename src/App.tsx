@@ -1,10 +1,11 @@
 import { ToastContainer } from "react-toastify";
 import { Login, Register } from "./pages";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import { Home, Layout, ReportPage, ListPage } from "./components";
+import { Home, Layout, ReportPage, ListPage, UserProfile } from "./components";
 import { LayoutAdmin, AdminPanel, UserDetails, Projects } from "./admin";
 import { useEffect } from "react";
 import { getAccessToken } from "./services/tokenService";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -20,17 +21,17 @@ function App() {
 function AppRoutes() {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = getAccessToken();
-  //   const admin = localStorage.getItem("isAdmin");
-  //   if (token && admin === "true") {
-  //     navigate("/admin");
-  //   } else if (token && admin === "false") {
-  //     navigate("/");
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = getAccessToken();
+    const admin = localStorage.getItem("isAdmin");
+    if (token && admin === "true") {
+      navigate("/admin");
+    } else if (token && admin === "false") {
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <Routes>
@@ -46,6 +47,7 @@ function AppRoutes() {
               <Route path="/" element={<Home />} />
               <Route path="/list/:id" element={<ListPage />} />
               <Route path="/detail/:id" element={<ReportPage />} />
+              <Route path="/userProfile/:id" element={<UserProfile />} />
               {/* <Route path="/detailModal/:id" element={<DetailModel />} /> */}
               {/* Add more routes here */}
             </Routes>
